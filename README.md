@@ -1,4 +1,4 @@
-# EctoSQLite3Extras
+# Ecto SQLite3 Extras
 
 **TODO: Add description**
 
