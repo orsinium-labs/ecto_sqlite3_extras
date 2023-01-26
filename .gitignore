@@ -1,0 +1,9 @@
+/_build/
+/cover/
+/deps/
+/doc/
+/.fetch
+erl_crash.dump
+*.ez
+ecto_sqlite3_extras-*.tar
+/tmp/
