@@ -1,8 +1,8 @@
-defmodule EctoSqlite3ExtrasTest do
+defmodule EctoSQLite3ExtrasTest do
   use ExUnit.Case
-  doctest EctoSqlite3Extras
+  doctest EctoSQLite3Extras
 
   test "greets the world" do
-    assert EctoSqlite3Extras.hello() == :world
+    assert EctoSQLite3Extras.hello() == :world
   end
 end

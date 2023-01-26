@@ -1,4 +1,4 @@
-defmodule EctoSqlite3Extras.MixProject do
+defmodule EctoSQLite3Extras.MixProject do
   use Mix.Project
 
   def project do

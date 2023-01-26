@@ -1,6 +1,6 @@
-defmodule EctoSqlite3Extras do
+defmodule EctoSQLite3Extras do
   @moduledoc """
-  Documentation for `EctoSqlite3Extras`.
+  Documentation for `EctoSQLite3Extras`.
   """
 
   @doc """
@@ -8,7 +8,7 @@ defmodule EctoSqlite3Extras do
 
   ## Examples
 
-      iex> EctoSqlite3Extras.hello()
+      iex> EctoSQLite3Extras.hello()
       :world
 
   """
