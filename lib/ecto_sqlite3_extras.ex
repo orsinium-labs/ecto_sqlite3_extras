@@ -7,8 +7,9 @@ defmodule EctoSQLite3Extras do
   @spec queries(repo() | nil) :: map()
   def queries(_repo \\ nil) do
     %{
+      table_size: EctoSQLite3Extras.TableSize,
       index_size: EctoSQLite3Extras.IndexSize,
-      table_size: EctoSQLite3Extras.TableSize
+      sequence_number: EctoSQLite3Extras.SequenceNumber
     }
   end
 
@@ -16,6 +17,7 @@ defmodule EctoSQLite3Extras do
 
   def index_size(repo, opts \\ []), do: query(:index_size, repo, opts)
   def table_size(repo, opts \\ []), do: query(:table_size, repo, opts)
+  def sequence_number(repo, opts \\ []), do: query(:sequence_number, repo, opts)
 
   def query(name, repo, opts \\ @default_query_opts)
 
