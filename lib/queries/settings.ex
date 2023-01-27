@@ -27,12 +27,9 @@ defmodule EctoSQLite3Extras.Settings do
         UNION ALL SELECT 'cache_spill', *             FROM pragma_cache_spill
         UNION ALL SELECT 'cell_size_check', *         FROM pragma_cell_size_check
         UNION ALL SELECT 'checkpoint_fullfsync', *    FROM pragma_checkpoint_fullfsync
-        UNION ALL SELECT 'count_changes', *           FROM pragma_count_changes
         UNION ALL SELECT 'data_version', *            FROM pragma_data_version
         UNION ALL SELECT 'defer_foreign_keys', *      FROM pragma_defer_foreign_keys
-        UNION ALL SELECT 'empty_result_callbacks', *  FROM pragma_empty_result_callbacks
         UNION ALL SELECT 'freelist_count', *          FROM pragma_freelist_count
-        UNION ALL SELECT 'full_column_names', *       FROM pragma_full_column_names
         UNION ALL SELECT 'fullfsync', *               FROM pragma_fullfsync
         UNION ALL SELECT 'hard_heap_limit', *         FROM pragma_hard_heap_limit
         UNION ALL SELECT 'ignore_check_constraints', * FROM pragma_ignore_check_constraints
@@ -44,8 +41,6 @@ defmodule EctoSQLite3Extras.Settings do
         UNION ALL SELECT 'read_uncommitted', *        FROM pragma_read_uncommitted
         UNION ALL SELECT 'recursive_triggers', *      FROM pragma_recursive_triggers
         UNION ALL SELECT 'reverse_unordered_selects', * FROM pragma_reverse_unordered_selects
-        UNION ALL SELECT 'schema_version', *          FROM pragma_schema_version
-        UNION ALL SELECT 'short_column_names', *      FROM pragma_short_column_names
         UNION ALL SELECT 'soft_heap_limit', *         FROM pragma_soft_heap_limit
         UNION ALL SELECT 'synchronous', *             FROM pragma_synchronous
         UNION ALL SELECT 'temp_store', *              FROM pragma_temp_store
