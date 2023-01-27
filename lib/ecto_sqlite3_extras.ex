@@ -72,4 +72,31 @@ defmodule EctoSQLite3Extras do
   defp format(:raw, _info, result) do
     result
   end
+
+  defp format(:human, _info, result) do
+    rows =
+      Enum.map(result.rows, fn row ->
+        Enum.map(Enum.zip(row, result.columns), &format_value/1)
+      end)
+
+    Map.replace(result, :rows, rows)
+  end
+
+  defp format_value({value, column_name}) do
+    if String.ends_with?(column_name, "_size") do
+      format_size(value)
+    else
+      value
+    end
+  end
+
+  # Format size in bytes as a human-readable text.
+  @spec format_size(integer()) :: integer() | String.t()
+  defp format_size(v) do
+    cond do
+      v < 1024 -> v
+      v < 1024 * 1024 -> "#{div(v, 1024)} Kb"
+      true -> "#{div(v, 1024 * 1024)} Mb"
+    end
+  end
 end
