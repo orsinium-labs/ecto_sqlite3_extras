@@ -5,7 +5,7 @@ defmodule EctoSQLite3ExtrasTest do
 
   test "all queries define info" do
     qs = EctoSQLite3Extras.queries()
-    assert map_size(qs) == 3
+    assert map_size(qs) == 4
 
     for pair <- qs do
       {name, module} = pair
