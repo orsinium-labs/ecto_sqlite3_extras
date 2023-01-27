@@ -16,10 +16,11 @@ defmodule EctoSQLite3Extras.TableSize do
 
   def query(_args \\ []) do
     """
-    /* ECTO_SQLITE3_EXTRAS: Size of the tables (excluding indexes), descending by size */
-
-    SELECT schema, name, pgsize AS size
+    /* from ecto_sqlite3_extras */
+    SELECT name, SUM(payload) AS size
     FROM dbstat
+    WHERE name IN (SELECT name FROM sqlite_schema WHERE type='table')
+    GROUP BY name
     ORDER BY size DESC;
     """
   end
