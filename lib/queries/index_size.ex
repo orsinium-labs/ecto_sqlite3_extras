@@ -1,9 +1,9 @@
-defmodule EctoSQLite3Extras.TableSize do
+defmodule EctoSQLite3Extras.IndexSize do
   @behaviour EctoSQLite3Extras.Query
 
   def info do
     %{
-      title: "Size of tables, descending by size",
+      title: "Size of indices, descending by size",
       index: 1,
       order_by: [size: :desc],
       columns: [
@@ -18,7 +18,7 @@ defmodule EctoSQLite3Extras.TableSize do
     /* from ecto_sqlite3_extras */
     SELECT name, SUM(payload) AS size
     FROM dbstat
-    WHERE name IN (SELECT name FROM sqlite_schema WHERE type='table')
+    WHERE name IN (SELECT name FROM sqlite_schema WHERE type='index')
     GROUP BY name
     ORDER BY size DESC;
     """

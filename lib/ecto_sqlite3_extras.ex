@@ -1,29 +1,21 @@
 defmodule EctoSQLite3Extras do
   @moduledoc """
-  The entry point for each function.
+  Query stats about an SQLite database.
   """
-
-  @callback info :: %{
-              required(:title) => binary,
-              required(:columns) => [%{name: atom, type: atom}],
-              optional(:order_by) => [{atom, :asc | :desc}],
-              optional(:index) => integer,
-              optional(:default_args) => list,
-              optional(:args_for_select) => list
-            }
-
-  @callback query :: binary
-
   @type repo :: module() | {module(), node()}
 
   @spec queries(repo() | nil) :: map()
   def queries(_repo \\ nil) do
     %{
+      index_size: EctoSQLite3Extras.IndexSize,
       table_size: EctoSQLite3Extras.TableSize
     }
   end
 
   @default_query_opts [log: false]
+
+  def index_size(repo, opts \\ []), do: query(:index_size, repo, opts)
+  def table_size(repo, opts \\ []), do: query(:table_size, repo, opts)
 
   def query(name, repo, opts \\ @default_query_opts)
 
@@ -73,11 +65,4 @@ defmodule EctoSQLite3Extras do
   defp format(:raw, _info, result) do
     result
   end
-
-  @doc """
-  Run `table_size` query on `repo`, in the given `format`.
-
-  `format` is either `:ascii` or `:raw`
-  """
-  def table_size(repo, opts \\ []), do: query(:table_size, repo, opts)
 end

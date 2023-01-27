@@ -5,21 +5,22 @@ defmodule EctoSQLite3ExtrasTest do
 
   test "all queries define info" do
     qs = EctoSQLite3Extras.queries()
-    assert map_size(qs) == 1
+    assert map_size(qs) == 2
 
     for pair <- qs do
       {name, module} = pair
       assert is_atom(name)
 
       info = module.info()
-      assert info.title
+      assert String.length(info.title) > 5
+      assert length(info.columns) > 0
 
       for column <- info.columns do
         assert column.name
         assert column.type
       end
 
-      for {order_by, dir} <- info[:order_by] || [] do
+      for {order_by, dir} <- info[:order_by] do
         assert dir in [:asc, :desc]
         assert Enum.find(info.columns, &(&1.name == order_by))
       end
@@ -35,7 +36,9 @@ defmodule EctoSQLite3ExtrasTest do
     test "run queries by param" do
       for query_name <- EctoSQLite3Extras.queries(TestRepo) |> Map.keys() do
         result = EctoSQLite3Extras.query(query_name, TestRepo, format: :raw)
-        assert length(result.columns) > 0
+        info = EctoSQLite3Extras.queries()[query_name].info
+        assert length(result.columns) == length(info.columns)
+        assert result.num_rows > 0
       end
     end
   end
