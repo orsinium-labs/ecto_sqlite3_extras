@@ -8,6 +8,7 @@ defmodule EctoSQLite3Extras do
   def queries(_repo \\ nil) do
     # ordered by "index" value
     %{
+      total_size: EctoSQLite3Extras.TotalSize,
       table_size: EctoSQLite3Extras.TableSize,
       index_size: EctoSQLite3Extras.IndexSize,
       sequence_number: EctoSQLite3Extras.SequenceNumber,
@@ -17,6 +18,7 @@ defmodule EctoSQLite3Extras do
 
   @default_query_opts [log: false]
 
+  def total_size(repo, opts \\ []), do: query(:total_size, repo, opts)
   def index_size(repo, opts \\ []), do: query(:index_size, repo, opts)
   def table_size(repo, opts \\ []), do: query(:table_size, repo, opts)
   def sequence_number(repo, opts \\ []), do: query(:sequence_number, repo, opts)

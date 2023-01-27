@@ -4,8 +4,8 @@ defmodule EctoSQLite3Extras.Settings do
   def info do
     %{
       title: "Values of all bool or integer PRAGMAs",
-      index: 4,
-      order_by: [name: :desc],
+      index: 5,
+      order_by: [name: :asc],
       columns: [
         %{name: :name, type: :string},
         %{name: :value, type: :integer}

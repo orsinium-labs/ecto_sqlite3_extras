@@ -4,7 +4,7 @@ defmodule EctoSQLite3Extras.SequenceNumber do
   def info do
     %{
       title: "Sequence numbers of autoincrement columns",
-      index: 3,
+      index: 4,
       order_by: [sequence_number: :desc],
       columns: [
         %{name: :table_name, type: :string},

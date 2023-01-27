@@ -1,6 +1,6 @@
 # Ecto SQLite3 Extras
 
-Helpful queries and [Phoenix Live Dashboard](https://github.com/phoenixframework/phoenix_live_dashboard) integration for [SQLite](https://sqlite.org/index.html). Serves the same purpose for [ecto_sqlite3](https://github.com/elixir-sqlite/ecto_sqlite3) as [ecto_psql_extras](https://github.com/pawurb/ecto_psql_extras) for [ecto_psql](https://github.com/elixir-ecto/ecto_sql).
+Helpful queries and [Phoenix Live Dashboard](https://github.com/phoenixframework/phoenix_live_dashboard) integration for [SQLite](https://sqlite.org/index.html). It's like [ecto_psql_extras](https://github.com/pawurb/ecto_psql_extras) but for SQLite instead of PostgreSQL.
 
 ## Installation
 
@@ -29,8 +29,8 @@ end
     1. `payload_size`:
     1. `unused_size`:
     1. `page_size`:
-    1. `cell_count`:
-    1. `page_count`:
+    1. `cells`:
+    1. `pages`:
     1. `max_payload_size`:
 1. `index_size`.
 1. `sequence_number`.
