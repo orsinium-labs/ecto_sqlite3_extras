@@ -3,12 +3,17 @@ defmodule EctoSQLite3Extras.TableSize do
 
   def info do
     %{
-      title: "Size of tables, descending by size",
+      title: "Size of tables (without indices)",
       index: 1,
-      order_by: [size: :desc],
+      order_by: [page_size: :desc],
       columns: [
         %{name: :name, type: :string},
-        %{name: :size, type: :integer}
+        %{name: :payload_size, type: :integer},
+        %{name: :unused_size, type: :integer},
+        %{name: :page_size, type: :integer},
+        %{name: :cell_count, type: :integer},
+        %{name: :page_count, type: :integer},
+        %{name: :max_payload_size, type: :integer}
       ]
     }
   end
@@ -16,11 +21,19 @@ defmodule EctoSQLite3Extras.TableSize do
   def query(_args \\ []) do
     """
     /* from ecto_sqlite3_extras */
-    SELECT name, SUM(payload) AS size
+    SELECT
+        name,
+        payload AS payload_size,
+        unused as unused_size,
+        pgsize as page_size,
+        ncell as cell_count,
+        pageno as page_count,
+        mx_payload as max_payload_size
     FROM dbstat
-    WHERE name IN (SELECT name FROM sqlite_schema WHERE type='table')
-    GROUP BY name
-    ORDER BY size DESC;
+    WHERE
+        name IN (SELECT name FROM sqlite_schema WHERE type='table')
+        AND aggregate=TRUE
+    ORDER BY page_size DESC;
     """
   end
 end
