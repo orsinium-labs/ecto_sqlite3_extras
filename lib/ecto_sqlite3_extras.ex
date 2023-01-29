@@ -12,7 +12,8 @@ defmodule EctoSQLite3Extras do
       table_size: EctoSQLite3Extras.TableSize,
       index_size: EctoSQLite3Extras.IndexSize,
       sequence_number: EctoSQLite3Extras.SequenceNumber,
-      settings: EctoSQLite3Extras.Settings
+      settings: EctoSQLite3Extras.Settings,
+      integrity_check: EctoSQLite3Extras.IntegrityCheck
     }
   end
 
@@ -23,6 +24,7 @@ defmodule EctoSQLite3Extras do
   def table_size(repo, opts \\ []), do: query(:table_size, repo, opts)
   def sequence_number(repo, opts \\ []), do: query(:sequence_number, repo, opts)
   def settings(repo, opts \\ []), do: query(:settings, repo, opts)
+  def integrity_check(repo, opts \\ []), do: query(:integrity_check, repo, opts)
 
   def query(name, repo, opts \\ @default_query_opts)
 
