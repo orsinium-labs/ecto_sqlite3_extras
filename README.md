@@ -18,6 +18,8 @@ end
 
 ...
 
+![Example of live dashboard with ecto_sqlite3_extras](./assets/live-dashboard.png)
+
 ## Using from Elixir
 
 ...
