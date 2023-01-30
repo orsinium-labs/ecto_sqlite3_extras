@@ -10,12 +10,12 @@ defmodule EctoSQLite3Extras.IndexSize do
         %{name: :name, type: :string},
         %{name: :table_name, type: :string},
         %{name: :column_name, type: :string},
-        %{name: :payload_size, type: :integer},
-        %{name: :unused_size, type: :integer},
-        %{name: :page_size, type: :integer},
+        %{name: :payload_size, type: :bytes},
+        %{name: :unused_size, type: :bytes},
+        %{name: :page_size, type: :bytes},
         %{name: :cells, type: :integer},
         %{name: :pages, type: :integer},
-        %{name: :max_payload_size, type: :integer}
+        %{name: :max_payload_size, type: :bytes}
       ]
     }
   end
