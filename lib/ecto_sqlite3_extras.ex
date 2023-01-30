@@ -74,11 +74,15 @@ defmodule EctoSQLite3Extras do
     query_module = Map.fetch!(queries(repo), module_name)
     sql_query = query_module.query(Keyword.get(opts, :args, []))
     query_opts = Keyword.get(opts, :query_opts, @default_query_opts)
-    result = query!(repo, sql_query, query_opts)
     format_name = Keyword.get(opts, :format, :ascii)
-    format(format_name, query_module.info, result)
+
+    repo
+    |> query!(sql_query, query_opts)
+    |> preformat()
+    |> format(format_name, query_module.info)
   end
 
+  # run query on a remote node
   defp query!({repo, node}, query, query_opts) do
     case :rpc.call(node, repo, :query!, [query, [], query_opts]) do
       {:badrpc, {:EXIT, {:undef, _}}} ->
@@ -92,25 +96,44 @@ defmodule EctoSQLite3Extras do
     end
   end
 
+  # run query on the current node
   defp query!(repo, query, query_opts) do
     repo.query!(query, [], query_opts)
   end
 
-  defp format(:raw, _info, result), do: result
-  defp format(:ascii, _info, %{rows: []}), do: "No results"
+  # format summary tables based on the name in the first row
+  defp preformat(%{columns: [_, _], rows: rows} = result) do
+    rows = rows |> Enum.map(&format_row/1)
+    Map.replace!(result, :rows, rows)
+  end
 
-  defp format(:ascii, info, result) do
+  defp preformat(result) do
+    result
+  end
+
+  defp format(result, :raw, _info), do: result
+  defp format(%{rows: []}, :ascii, _info), do: "No results"
+
+  defp format(result, :ascii, info) do
     names = Enum.map(info.columns, & &1.name)
     types = Enum.map(info.columns, & &1.type)
 
     result.rows
-    |> Enum.map(&parse_row(&1, types))
+    |> Enum.map(&format_row(&1, types))
     |> TableRex.quick_render!(names, info.title)
     |> IO.puts()
   end
 
-  defp parse_row(values, types) do
+  defp format_row(values, types) do
     Enum.zip(values, types) |> Enum.map(&format_value/1)
+  end
+
+  defp format_row([name, value]) do
+    if String.ends_with?(name, "_size") do
+      [name, format_bytes(value)]
+    else
+      [name, value]
+    end
   end
 
   defp format_value({integer, :bytes}) when is_integer(integer), do: format_bytes(integer)
@@ -123,11 +146,9 @@ defmodule EctoSQLite3Extras do
       bytes >= memory_unit(:GB) -> format_bytes(bytes, :GB)
       bytes >= memory_unit(:MB) -> format_bytes(bytes, :MB)
       bytes >= memory_unit(:KB) -> format_bytes(bytes, :KB)
-      true -> format_bytes(bytes, :B)
+      true -> "#{bytes} B"
     end
   end
-
-  defp format_bytes(bytes, :B), do: "#{bytes} bytes"
 
   defp format_bytes(bytes, unit) do
     value = bytes / memory_unit(unit)
