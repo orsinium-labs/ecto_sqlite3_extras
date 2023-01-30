@@ -24,6 +24,8 @@ end
 
 ...
 
+![Example of ecto_sqlite3_extras usage with iex](./assets/iex.png)
+
 ## Available queries
 
 1. `table_size`. Information about the space used (and unused) by all tables. Based on the [dbstat](https://www.sqlite.org/dbstat.html) virtual table.
