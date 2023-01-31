@@ -52,9 +52,12 @@ defmodule EctoSQLite3ExtrasTest do
         ["cells", 49351],
         ["payload_size", "597.2 KB"],
         ["unused_size", "82.0 KB"],
+        ["vacuum_size", "184.8 KB"],
         ["page_size", "864.0 KB"],
+        ["pages", 864],
         ["pages: leaf", 840],
         ["pages: internal", 24],
+        ["pages: overflow", 0],
         ["pages: table", 466],
         ["pages: index", 389]
       ]
