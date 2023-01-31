@@ -23,7 +23,7 @@ defmodule EctoSQLite3Extras do
       table_size: EctoSQLite3Extras.TableSize,
       index_size: EctoSQLite3Extras.IndexSize,
       sequence_number: EctoSQLite3Extras.SequenceNumber,
-      settings: EctoSQLite3Extras.Settings,
+      pragma: EctoSQLite3Extras.Pragma,
       integrity_check: EctoSQLite3Extras.IntegrityCheck
     }
   end
@@ -57,8 +57,8 @@ defmodule EctoSQLite3Extras do
   @doc """
   Values of all bool or integer PRAGMAs.
   """
-  @spec settings(repo(), keyword()) :: any()
-  def settings(repo, opts \\ []), do: query(:settings, repo, opts)
+  @spec pragma(repo(), keyword()) :: any()
+  def pragma(repo, opts \\ []), do: query(:pragma, repo, opts)
 
   @doc """
   Run integrity checks on the database.

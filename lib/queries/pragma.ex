@@ -1,4 +1,4 @@
-defmodule EctoSQLite3Extras.Settings do
+defmodule EctoSQLite3Extras.Pragma do
   @behaviour EctoSQLite3Extras.Query
 
   def info do
