@@ -28,10 +28,8 @@ defmodule EctoSQLite3Extras do
     }
   end
 
-  @default_query_opts [log: false]
-
   @doc """
-  Total size of all tables and indices
+  Total size of all tables and indices.
   """
   @spec total_size(repo(), keyword()) :: any()
   def total_size(repo, opts \\ []), do: query(:total_size, repo, opts)
@@ -70,10 +68,10 @@ defmodule EctoSQLite3Extras do
   Run the query specified by its slug atom and get (or print) the result.
   """
   @spec query(module(), repo(), keyword()) :: any()
-  def query(module_name, repo, opts \\ @default_query_opts) do
+  def query(module_name, repo, opts \\ []) do
     query_module = Map.fetch!(queries(repo), module_name)
     sql_query = query_module.query(Keyword.get(opts, :args, []))
-    query_opts = Keyword.get(opts, :query_opts, @default_query_opts)
+    query_opts = Keyword.get(opts, :query_opts, log: false)
     format_name = Keyword.get(opts, :format, :ascii)
 
     repo
