@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  mix_test:
+  mix-test:
     runs-on: ubuntu-20.04
     env:
       MIX_ENV: test
@@ -28,3 +28,13 @@ jobs:
       # too slow >.<
       # - run: mix dialyzer
       - run: mix test
+
+  markdownlint-cli:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: nosborn/github-action-markdown-cli@v3.2.0
+        with:
+          files: .
+          config_file: .markdownlint.yaml
+          dot: true
