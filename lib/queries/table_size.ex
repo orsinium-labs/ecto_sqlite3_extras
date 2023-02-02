@@ -1,4 +1,7 @@
 defmodule EctoSQLite3Extras.TableSize do
+  @moduledoc """
+  Size of tables (without indices)
+  """
   @behaviour EctoSQLite3Extras.Query
 
   def info do

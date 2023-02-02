@@ -1,4 +1,5 @@
 defmodule EctoSQLite3ExtrasTest do
+  @moduledoc false
   use ExUnit.Case
   doctest EctoSQLite3Extras
   alias EctoSQLite3Extras.TestRepo
@@ -49,7 +50,7 @@ defmodule EctoSQLite3ExtrasTest do
     test "run total_size query using the function" do
       expected = [
         ["pages", 864],
-        ["cells", 49351],
+        ["cells", 49_351],
         ["payload_size", "597.2 KB"],
         ["unused_size", "82.0 KB"],
         ["vacuum_size", "184.8 KB"],

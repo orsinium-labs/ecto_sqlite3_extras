@@ -1,4 +1,7 @@
 defmodule EctoSQLite3Extras.SequenceNumber do
+  @moduledoc """
+  Sequence numbers of autoincrement columns
+  """
   @behaviour EctoSQLite3Extras.Query
 
   def info do

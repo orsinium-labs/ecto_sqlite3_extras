@@ -1,4 +1,7 @@
 defmodule EctoSQLite3Extras.Pragma do
+  @moduledoc """
+  Values of all bool or integer PRAGMAs
+  """
   @behaviour EctoSQLite3Extras.Query
 
   def info do

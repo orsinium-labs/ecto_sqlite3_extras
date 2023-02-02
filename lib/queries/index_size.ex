@@ -1,4 +1,7 @@
 defmodule EctoSQLite3Extras.IndexSize do
+  @moduledoc """
+  Size of indices
+  """
   @behaviour EctoSQLite3Extras.Query
 
   def info do

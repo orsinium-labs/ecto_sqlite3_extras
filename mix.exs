@@ -21,7 +21,8 @@ defmodule EctoSQLite3Extras.MixProject do
       {:exqlite, "~> 0.13.2"},
       {:table_rex, "~> 3.1.1"},
       {:ex_doc, ">= 0.0.0", only: :dev, runtime: false},
-      {:ecto_sqlite3, "~> 0.9.1", only: [:test]}
+      {:ecto_sqlite3, "~> 0.9.1", only: [:test]},
+      {:credo, "~> 1.6", only: [:dev, :test], runtime: false}
     ]
   end
 
