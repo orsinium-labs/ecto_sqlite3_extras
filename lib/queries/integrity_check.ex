@@ -1,4 +1,7 @@
 defmodule EctoSQLite3Extras.IntegrityCheck do
+  @moduledoc """
+  Run integrity checks on the database
+  """
   @behaviour EctoSQLite3Extras.Query
 
   def info do
