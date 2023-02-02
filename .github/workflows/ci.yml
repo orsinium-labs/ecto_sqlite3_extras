@@ -1,0 +1,27 @@
+name: main
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  mix_test:
+    runs-on: ubuntu-20.04
+    env:
+      MIX_ENV: test
+    steps:
+      - uses: actions/checkout@v2
+      - uses: erlef/setup-beam@v1
+        with:
+          otp-version: 24.3
+          elixir-version: 1.14.0
+      - run: mix deps.get --only test
+      - run: mix format --check-formatted
+      - run: mix deps.get
+      - run: mix deps.unlock --check-unused
+      - run: mix deps.compile
+      - run: mix compile --warnings-as-errors
+      - run: mix test
