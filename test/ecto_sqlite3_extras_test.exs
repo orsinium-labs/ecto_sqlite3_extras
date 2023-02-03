@@ -55,7 +55,6 @@ defmodule EctoSQLite3ExtrasTest do
         ["unused_size", "82.0 KB"],
         ["vacuum_size", "184.8 KB"],
         ["page_size", "864.0 KB"],
-        ["pages", 864],
         ["pages: leaf", 840],
         ["pages: internal", 24],
         ["pages: overflow", 0],

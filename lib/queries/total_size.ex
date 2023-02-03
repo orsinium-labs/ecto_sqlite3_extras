@@ -25,7 +25,6 @@ defmodule EctoSQLite3Extras.TotalSize do
     UNION ALL SELECT 'unused_size',   SUM(unused)   FROM dbstat
     UNION ALL SELECT 'vacuum_size',   SUM(pgsize) - SUM(payload) - SUM(unused) FROM dbstat
     UNION ALL SELECT 'page_size',     SUM(pgsize)   FROM dbstat
-    UNION ALL SELECT 'pages',         COUNT(*)      FROM dbstat
 
     UNION ALL SELECT 'pages: leaf', COUNT(*)
         FROM dbstat WHERE pagetype = 'leaf'

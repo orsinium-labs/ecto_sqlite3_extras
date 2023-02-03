@@ -48,6 +48,8 @@ defmodule EctoSQLite3Extras do
 
   @doc """
   Sequence numbers of autoincrement columns.
+
+  The query will fail if there are no autoincrement columns in the DB yet.
   """
   @spec sequence_number(repo(), keyword()) :: any()
   def sequence_number(repo, opts \\ []), do: query(:sequence_number, repo, opts)
