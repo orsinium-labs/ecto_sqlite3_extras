@@ -41,16 +41,16 @@ EctoSQLite3Extras.table_size({MyProject.Repo, self()})
 
 ## Available queries
 
-1. `total_size`. Total size of all tables and indices. It's a summary talbe, it has only 2 columns: `name` and `value`. Rows:
+1. `total_size`. The total size of all tables and indices. It's a summary table, it has only 2 columns: `name` and `value`. Rows:
     1. `cells`: The number of cells in the DB. Each value stored in the DB is represented as at least one cell. So, the number of cells correlates with the number of records in the DB.
     1. `payload_size`: How much space the actual useful payload takes in the DB.
     1. `unused_size`: How much space in the DB is reserved, not used yet, and can be used later to store more data. This is a surplus that occurs because SQLite allocates space for data in chunks ("pages").
-    1. `vacuum_size`: How much space is unused and cannot be used for the future data. You can run [VACUUM](https://www.sqlite.org/lang_vacuum.html) command to reduce it.
+    1. `vacuum_size`: How much space is unused and cannot be used for future data. You can run [VACUUM](https://www.sqlite.org/lang_vacuum.html) command to reduce it.
     1. `page_size`: The total space occupied by all pages. Each page is a single chunk of space allocated by SQLite. This number is the sum of `payload_size`, `unused_size`, and `vacuum_size`.
     1. `pages`: The total number of pages.
     1. `pages: leaf`: The pages that store the actual data. Read [SQLite Internals: Pages & B-trees](https://fly.io/blog/sqlite-internals-btree/) to learn more.
     1. `pages: internal`: The pages that store ranges for leaf pages for a faster lookup. Sometimes also called "interior pages".
-    1. `pages: overflow`: The pages that store chunks of big data that doesn't fit in a single leaf page.
+    1. `pages: overflow`: The pages that store chunks of big data that don't fit in a single leaf page.
     1. `pages: table`: The pages used for storing data for tables.
     1. `pages: index`: The pages used for storing indices.
 1. `table_size`. Information about the space used (and unused) by all tables. Based on the [dbstat](https://www.sqlite.org/dbstat.html) virtual table.
@@ -65,7 +65,7 @@ EctoSQLite3Extras.table_size({MyProject.Repo, self()})
 1. `index_size`. Size of all indices.
     1. `name`: The index name.
     1. `table_name`: The table where the index is defined.
-    1. `column_name`: The name of the column being indexed. This columns is NULL if the column is the rowid or an expression.
+    1. `column_name`: The name of the column being indexed. This column is NULL if the column is the rowid or an expression.
     1. `payload_size`.
     1. `unused_size`.
     1. `page_size`.
@@ -75,7 +75,7 @@ EctoSQLite3Extras.table_size({MyProject.Repo, self()})
 1. `sequence_number`. Sequence numbers of autoincrement columns. Generated based on the [sqlite_sequence](https://renenyffenegger.ch/notes/development/databases/SQLite/internals/schema-objects/sqlite_sequence) table. The query will fail if there are no autoincrement columns in the DB yet.
     1. `table_name`.
     1. `sequence_number`.
-1. `pragma`. List values of PRAGMAs (settings). Only includes the ones that have an integer or a boolean value. For bravity, the ones with `0` (`false`) value are excluded from the output (based on the observation that this is the default value for most of the PRAGMAs). Check out the SQLite documentation to learn more about what each PRAGMA means: [PRAGMA Statements](https://www.sqlite.org/pragma.html).
+1. `pragma`. List values of PRAGMAs (settings). Only includes the ones that have an integer or a boolean value. For brevity, the ones with the `0` (`false`) value are excluded from the output (based on the observation that this is the default value for most of the PRAGMAs). Check out the SQLite documentation to learn more about what each PRAGMA means: [PRAGMA Statements](https://www.sqlite.org/pragma.html).
     1. `name`: the name of the PRAGMA as listed in the SQLite documentation.
     1. `value`: the value of the PRAGMA. The `true` value is converted into `1` (and `false` is simply excluded).
 1. `integrity_check`. Run integrity checks on the database. Executes [PRAGMA integrity_check](https://www.sqlite.org/pragma.html#pragma_integrity_check) and returns the resulting messages.

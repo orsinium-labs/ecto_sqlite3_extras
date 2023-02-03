@@ -16,6 +16,9 @@ defmodule EctoSQLite3Extras.SequenceNumber do
     }
   end
 
+  # TODO(@orsinium): The query fails if the table doesn't exist.
+  # The table is created only when the first autoincrement column is created.
+  # Can we fix it without doing INSERTs?
   def query(_args \\ []) do
     """
     /* from ecto_sqlite3_extras */
