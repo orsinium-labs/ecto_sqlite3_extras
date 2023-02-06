@@ -9,4 +9,5 @@ ecto_sqlite3_extras-*.tar
 /tmp/
 /test_database.db
 /chinook.db-*
+/empty.db*
 /tmp*

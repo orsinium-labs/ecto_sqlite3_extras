@@ -2,6 +2,7 @@ defmodule EctoSQLite3ExtrasTest do
   @moduledoc false
   use ExUnit.Case
   doctest EctoSQLite3Extras
+  alias EctoSQLite3Extras.EmptyTestRepo
   alias EctoSQLite3Extras.TestRepo
   import ExUnit.CaptureIO
 
@@ -33,6 +34,7 @@ defmodule EctoSQLite3ExtrasTest do
   describe "database interaction" do
     setup do
       start_supervised!(EctoSQLite3Extras.TestRepo)
+      start_supervised!(EctoSQLite3Extras.EmptyTestRepo)
       :ok
     end
 
@@ -44,6 +46,16 @@ defmodule EctoSQLite3ExtrasTest do
         names = Enum.map(info.columns, &Atom.to_string(&1.name))
         assert result.columns == names
         assert result.num_rows > 0
+      end
+    end
+
+    test "run queries on empty database" do
+      for query_name <- EctoSQLite3Extras.queries(EmptyTestRepo) |> Map.keys() do
+        result = EctoSQLite3Extras.query(query_name, EmptyTestRepo, format: :raw)
+        info = EctoSQLite3Extras.queries()[query_name].info
+        assert length(result.columns) == length(info.columns)
+        names = Enum.map(info.columns, &Atom.to_string(&1.name))
+        assert result.columns == names
       end
     end
 
