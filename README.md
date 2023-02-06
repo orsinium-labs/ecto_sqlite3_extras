@@ -78,6 +78,7 @@ EctoSQLite3Extras.table_size({MyProject.Repo, self()})
 1. `pragma`. List values of PRAGMAs (settings). Only includes the ones that have an integer or a boolean value. For brevity, the ones with the `0` (`false`) value are excluded from the output (based on the observation that this is the default value for most of the PRAGMAs). Check out the SQLite documentation to learn more about what each PRAGMA means: [PRAGMA Statements](https://www.sqlite.org/pragma.html).
     1. `name`: the name of the PRAGMA as listed in the SQLite documentation.
     1. `value`: the value of the PRAGMA. The `true` value is converted into `1` (and `false` is simply excluded).
+1. `compile_options`. List the [compile-time options](https://www.sqlite.org/compile.html) used when building SQLite, one option per row. The "SQLITE_" prefix is omitted from the returned option names. See [exqlite docs](https://github.com/elixir-sqlite/exqlite#defining-extra-compile-flags) on how to change these options.
 1. `integrity_check`. Run integrity checks on the database. Executes [PRAGMA integrity_check](https://www.sqlite.org/pragma.html#pragma_integrity_check) and returns the resulting messages.
 
 ## Acknowledgments
