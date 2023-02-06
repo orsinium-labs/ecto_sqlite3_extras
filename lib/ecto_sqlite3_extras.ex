@@ -69,22 +69,24 @@ defmodule EctoSQLite3Extras do
   @doc """
   Run the query specified by its slug atom and get (or print) the result.
   """
-  @spec query(module(), repo(), keyword()) :: any()
-  def query(module_name, repo, opts \\ []) do
-    query_module = Map.fetch!(queries(repo), module_name)
+  @spec query(atom(), repo(), keyword()) :: any()
+  def query(query_name, repo, opts \\ []) do
+    query_module = Map.fetch!(queries(repo), query_name)
     sql_query = query_module.query(Keyword.get(opts, :args, []))
     query_opts = Keyword.get(opts, :query_opts, log: false)
     format_name = Keyword.get(opts, :format, :ascii)
 
     repo
-    |> query!(sql_query, query_opts)
+    |> run_query(sql_query, query_opts)
+    |> unwrap()
     |> preformat()
     |> format(format_name, query_module.info)
   end
 
   # run query on a remote node
-  defp query!({repo, node}, query, query_opts) do
-    case :rpc.call(node, repo, :query!, [query, [], query_opts]) do
+  @spec run_query(repo(), String.t(), keyword()) :: {:ok, map()} | {:error, Exception.t()}
+  defp run_query({repo, node}, query, query_opts) do
+    case :rpc.call(node, repo, :query, [query, [], query_opts]) do
       {:badrpc, {:EXIT, {:undef, _}}} ->
         raise "repository is not defined on remote node"
 
@@ -97,11 +99,20 @@ defmodule EctoSQLite3Extras do
   end
 
   # run query on the current node
-  defp query!(repo, query, query_opts) do
-    repo.query!(query, [], query_opts)
+  defp run_query(repo, query, query_opts) do
+    repo.query(query, [], query_opts)
   end
 
+  @spec unwrap({:ok, map()} | {:error, Exception.t()}) :: map()
+  defp unwrap({:ok, result}), do: result
+
+  defp unwrap({:error, %{message: "no such table: sqlite_sequence"}}),
+    do: %{rows: [], num_rows: 0, columns: ["table_name", "sequence_number"]}
+
+  defp unwrap({:error, err}), do: raise(err)
+
   # format summary tables based on the name in the first row
+  @spec preformat(map()) :: map()
   defp preformat(%{columns: [_, _], rows: rows} = result) do
     rows = rows |> Enum.map(&format_row/1)
     Map.replace!(result, :rows, rows)
@@ -111,6 +122,7 @@ defmodule EctoSQLite3Extras do
     result
   end
 
+  @spec format(map(), atom(), map()) :: any()
   defp format(result, :raw, _info), do: result
   defp format(%{rows: []}, :ascii, _info), do: "No results"
 
@@ -124,6 +136,7 @@ defmodule EctoSQLite3Extras do
     |> IO.puts()
   end
 
+  @spec format_row(list(list()), list(atom())) :: any()
   defp format_row(values, types) do
     Enum.zip(values, types) |> Enum.map(&format_value/1)
   end
@@ -136,10 +149,13 @@ defmodule EctoSQLite3Extras do
     end
   end
 
+  @spec format_value({any(), atom()}) :: String.t()
   defp format_value({integer, :bytes}) when is_integer(integer), do: format_bytes(integer)
   defp format_value({binary, _}) when is_binary(binary), do: binary
   defp format_value({other, _}), do: inspect(other)
 
+  # format integer bytes value as a human-readable string
+  @spec format_bytes(integer()) :: String.t()
   defp format_bytes(bytes) do
     cond do
       bytes >= memory_unit(:TB) -> format_bytes(bytes, :TB)
@@ -150,11 +166,14 @@ defmodule EctoSQLite3Extras do
     end
   end
 
+  @spec format_bytes(integer(), atom()) :: String.t()
   defp format_bytes(bytes, unit) do
     value = bytes / memory_unit(unit)
     "#{:erlang.float_to_binary(value, decimals: 1)} #{unit}"
   end
 
+  # get number of bytes for the given memory unit atom
+  @spec memory_unit(atom()) :: integer()
   defp memory_unit(:TB), do: 1024 * 1024 * 1024 * 1024
   defp memory_unit(:GB), do: 1024 * 1024 * 1024
   defp memory_unit(:MB), do: 1024 * 1024
