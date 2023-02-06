@@ -24,6 +24,7 @@ defmodule EctoSQLite3Extras do
       index_size: EctoSQLite3Extras.IndexSize,
       sequence_number: EctoSQLite3Extras.SequenceNumber,
       pragma: EctoSQLite3Extras.Pragma,
+      compile_options: EctoSQLite3Extras.CompileOptions,
       integrity_check: EctoSQLite3Extras.IntegrityCheck
     }
   end
@@ -59,6 +60,12 @@ defmodule EctoSQLite3Extras do
   """
   @spec pragma(repo(), keyword()) :: any()
   def pragma(repo, opts \\ []), do: query(:pragma, repo, opts)
+
+  @doc """
+  Compile-time options used when building SQLite.
+  """
+  @spec compile_options(repo(), keyword()) :: any()
+  def compile_options(repo, opts \\ []), do: query(:compile_options, repo, opts)
 
   @doc """
   Run integrity checks on the database.
