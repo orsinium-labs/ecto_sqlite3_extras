@@ -1,7 +1,7 @@
 defmodule EctoSQLite3Extras.MixProject do
   use Mix.Project
   @github_url "https://github.com/orsinium-labs/ecto_sqlite3_extras"
-  @version "1.1.6"
+  @version "1.1.7"
 
   def project do
     [
