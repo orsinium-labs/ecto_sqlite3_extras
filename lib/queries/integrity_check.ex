@@ -7,7 +7,7 @@ defmodule EctoSQLite3Extras.IntegrityCheck do
   def info do
     %{
       title: "Run integrity checks on the database",
-      index: 6,
+      index: 7,
       order_by: [message: :desc],
       columns: [
         %{name: :message, type: :string}
