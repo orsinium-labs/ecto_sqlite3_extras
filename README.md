@@ -9,14 +9,12 @@ The package can be installed by adding `ecto_sqlite3_extras` to your list of dep
 ```elixir
 def deps do
   [
-    {:ecto_sqlite3_extras, "~> 1.1.5"}
+    {:ecto_sqlite3_extras, "~> 1.2.0"}
   ]
 end
 ```
 
 ## Integrating with Phoenix Live Dashboard
-
-**WARNING:** [The integration is not merged upstream yet](https://github.com/phoenixframework/phoenix_live_dashboard/pull/400).
 
 When you have `ecto_sqlite3_extras` in the list of dependencies for your [Phoenix](https://www.phoenixframework.org/) project that uses [ecto_sqlite3](https://github.com/elixir-sqlite/ecto_sqlite3), the [Phoenix Live Dashboard](https://github.com/phoenixframework/phoenix_live_dashboard) will automatically show the tables produced by `ecto_sqlite3_extras` in the "Ecto Stats" tab. Magic!
 
