@@ -19,11 +19,11 @@ defmodule EctoSQLite3Extras.MixProject do
 
   defp deps do
     [
-      {:exqlite, "~> 0.13.2"},
-      {:table_rex, "~> 3.1.1"},
+      {:exqlite, "~> 0.14.0"},
+      {:table_rex, "~> 4.0"},
       {:ex_doc, ">= 0.0.0", only: :dev, runtime: false},
-      {:ecto_sqlite3, "~> 0.9.1", only: [:test]},
-      {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
+      {:ecto_sqlite3, "~> 0.11.0", only: [:test]},
+      {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 1.0", only: [:dev, :test], runtime: false}
     ]
   end
