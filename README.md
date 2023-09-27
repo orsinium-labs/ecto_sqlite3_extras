@@ -9,7 +9,7 @@ The package can be installed by adding `ecto_sqlite3_extras` to your list of dep
 ```elixir
 def deps do
   [
-    {:ecto_sqlite3_extras, "~> 1.2.0"}
+    {:ecto_sqlite3_extras, "~> 1.2.1"}
   ]
 end
 ```
