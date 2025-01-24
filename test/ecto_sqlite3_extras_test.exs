@@ -41,7 +41,7 @@ defmodule EctoSQLite3ExtrasTest do
     test "run queries by param" do
       for query_name <- EctoSQLite3Extras.queries(TestRepo) |> Map.keys() do
         result = EctoSQLite3Extras.query(query_name, TestRepo, format: :raw)
-        info = EctoSQLite3Extras.queries()[query_name].info
+        info = EctoSQLite3Extras.queries()[query_name].info()
         assert length(result.columns) == length(info.columns)
         names = Enum.map(info.columns, &Atom.to_string(&1.name))
         assert result.columns == names
@@ -52,7 +52,7 @@ defmodule EctoSQLite3ExtrasTest do
     test "run queries on empty database" do
       for query_name <- EctoSQLite3Extras.queries(EmptyTestRepo) |> Map.keys() do
         result = EctoSQLite3Extras.query(query_name, EmptyTestRepo, format: :raw)
-        info = EctoSQLite3Extras.queries()[query_name].info
+        info = EctoSQLite3Extras.queries()[query_name].info()
         assert length(result.columns) == length(info.columns)
         names = Enum.map(info.columns, &Atom.to_string(&1.name))
         assert result.columns == names

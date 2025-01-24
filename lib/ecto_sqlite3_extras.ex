@@ -87,7 +87,7 @@ defmodule EctoSQLite3Extras do
     |> run_query(sql_query, query_opts)
     |> unwrap()
     |> preformat()
-    |> format(format_name, query_module.info)
+    |> format(format_name, query_module.info())
   end
 
   # run query on a remote node
