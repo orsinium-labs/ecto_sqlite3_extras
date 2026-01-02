@@ -16,7 +16,7 @@ defmodule EctoSQLite3ExtrasTest do
 
       info = module.info()
       assert String.length(info.title) > 5
-      assert length(info.columns) > 0
+      assert info.columns != []
       assert info.index > 0
 
       for column <- info.columns do
